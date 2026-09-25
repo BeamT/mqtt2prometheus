@@ -386,6 +386,7 @@ During the evaluation, the following variables are available to the expression:
 * `raw_value` - the raw MQTT sensor value (without any conversion)
 * `value` - the current sensor value (after string-value mapping, if configured)
 * `last_value` - the `value` during the previous expression evaluation
+* `last_raw_value` - the `raw_value` during the previous expression evaluation (`nil` on the first evaluation, so use e.g. `last_raw_value ?? 0`)
 * `last_result` - the result from the previous expression evaluation (a float for `raw_expression`/`expression`, a string for `dynamic_labels`)
 * `elapsed` - the time that passed since the previous evaluation, as a [Duration](https://pkg.go.dev/time#Duration) value
 * `payload` - the full MQTT JSON payload as a `map[string]interface{}`, allowing access to sibling fields not targeted by `mqtt_name`
@@ -403,7 +404,7 @@ The [language definition](https://expr-lang.org/docs/language-definition) descri
 
 [Time](https://pkg.go.dev/time#Time) and [Duration](https://pkg.go.dev/time#Duration) values come with their own methods which can be used in expressions. For example, `elapsed.Milliseconds()` yields the number of milliseconds that passed since the last evaluation, while `now().Sub(elapsed).Weekday()` returns the day of the week during the previous evaluation.
 
-The `last_value`, `last_result`, and the timestamp of the last evaluation are regularly stored on disk. When mqtt2prometheus is restarted, the data is read back for the next evaluation. This means that you can calculate stable, long-running time serious which depend on the previous result.
+The `last_value`, `last_raw_value`, `last_result`, and the timestamp of the last evaluation are regularly stored on disk. When mqtt2prometheus is restarted, the data is read back for the next evaluation. This means that you can calculate stable, long-running time serious which depend on the previous result.
 
 #### Evaluation Order
 

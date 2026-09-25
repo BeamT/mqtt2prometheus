@@ -131,12 +131,13 @@ func toFloat64(i interface{}) float64 {
 func defaultExprEnv() map[string]interface{} {
 	return map[string]interface{}{
 		// Variables
-		env_raw_value:   nil,
-		env_value:       0.0,
-		env_last_value:  0.0,
-		env_last_result: 0.0,
-		env_elapsed:     time.Duration(0),
-		env_payload:     map[string]interface{}{},
+		env_raw_value:      nil,
+		env_value:          0.0,
+		env_last_value:     0.0,
+		env_last_raw_value: nil,
+		env_last_result:    0.0,
+		env_elapsed:        time.Duration(0),
+		env_payload:        map[string]interface{}{},
 		// Functions
 		env_now:   now,
 		env_int:   toInt64,
@@ -472,6 +473,7 @@ func (p *Parser) evalExpressionLabel(metricID, label, code string, rawValue inte
 
 	// Update the dynamic state
 	ms.dynamic.LastExprResultString = ret
+	ms.dynamic.LastExprRawValue = rawValue
 	ms.dynamic.LastExprValue = value
 	ms.dynamic.LastExprTimestamp = now()
 

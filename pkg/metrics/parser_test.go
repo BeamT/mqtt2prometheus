@@ -839,6 +839,11 @@ func TestParser_evalExpression(t *testing.T) {
 			results:    []float64{1, 1, 3, 2},
 		},
 		{
+			expression: "value - (last_raw_value ?? 0)",
+			values:     []float64{1, 2, 5, 7},
+			results:    []float64{1, 1, 3, 2},
+		},
+		{
 			expression: "last_result + value",
 			values:     []float64{1, 2, 3, 4},
 			results:    []float64{1, 3, 6, 10},
