@@ -1,5 +1,6 @@
 # This is an example goreleaser.yaml file with some sane defaults.
 # Make sure to check the documentation at http://goreleaser.com
+version: 2
 before:
   hooks:
     # You may remove this if you don't use go modules.
@@ -84,7 +85,7 @@ nfpms:
         dst: /etc/mqtt2prometheus/config.yaml
         type: config
       - src: ./systemd/mqtt2prometheus.service
-        dst: /etc/systemd/system/mqtt2prometheus.service
+        dst: /usr/lib/systemd/system/mqtt2prometheus.service
         type: config
       - src: ./systemd/mqtt2prometheus
         dst: /etc/default/mqtt2prometheus
